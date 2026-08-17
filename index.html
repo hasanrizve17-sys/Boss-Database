@@ -69,6 +69,7 @@ body::after{
 .boss-name{font-size:18px;font-weight:700}.hp{color:#c4a7ff;font-size:18px;font-weight:800;white-space:nowrap}
 .empty{display:none;text-align:center;padding:35px;color:#858b98}
 footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px;font-size:13px}
+.click-me{color:#8b5cf6;font-size:13px;font-weight:800;white-space:nowrap}.boss{cursor:pointer}.category-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:20px}.modal{width:min(650px,100%);background:#12151d;border:1px solid #343b49;border-radius:18px;padding:26px;box-shadow:0 20px 80px rgba(0,0,0,.6)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:15px}.close-btn{border:0;background:#252a35;color:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;font-size:18px}.difficulty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.difficulty{padding:20px 12px;background:#0e1118;border:1px solid #2b3040;border-radius:12px;text-align:center}.difficulty-title{font-weight:800;color:#aeb4c1;margin-bottom:8px}.difficulty-hp{font-size:20px;font-weight:900;color:#c4a7ff}@media(max-width:650px){.difficulty-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -96,6 +97,12 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
     <h1>Boss HP</h1>
     <p>Regular Boss HP List</p>
     <input id="bossSearch" class="search" type="text" placeholder="Search boss...">
+    <div class="category-buttons">
+      <button class="navbtn active" onclick="setCategory('All',this)">All Bosses</button>
+      <button class="navbtn" onclick="setCategory('Spawnable',this)">Spawnable</button>
+      <button class="navbtn" onclick="setCategory('Non-Spawnable',this)">Non-Spawnable</button>
+      <button class="navbtn" onclick="setCategory('Dungeon',this)">Dungeon</button>
+    </div>
   </div>
   <main class="container">
     <div id="bossCount" class="count"></div>
@@ -110,7 +117,7 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
     <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
     <h1>Tower Bosses HP</h1>
     <p>Tower Boss HP List</p>
-    <input id="towerSearch" class="search" type="text" placeholder="Search tower boss...">
+    <input id="towerSearch" class="search" type="text" placeholder="Search floor...">
   </div>
   <main class="container">
     <div id="towerCount" class="count"></div>
@@ -119,6 +126,8 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
   </main>
 </section>
 
+
+<div id="bossModal" class="modal-overlay" onclick="if(event.target===this)closeBossModal()"><div class="modal"><div class="modal-head"><h2 id="modalBossName">Boss</h2><button class="close-btn" onclick="closeBossModal()">✕</button></div><div class="difficulty-grid"><div class="difficulty"><div class="difficulty-title">Default</div><div id="modalDefault" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Easy</div><div id="modalEasy" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Medium</div><div id="modalMedium" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Hard</div><div id="modalHard" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Extreme</div><div id="modalExtreme" class="difficulty-hp">- HP</div></div></div></div></div>
 <footer>Boss Database</footer>
 
 <script>
@@ -126,10 +135,35 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
    EDIT YOUR REGULAR BOSSES HERE
    ========================================================= */
 const bosses = [
-  { name: "Deku", hp: "Nill" },
-  { name: "Excaliber", hp: "Nill" },
-  { name: "Gojo V1", hp: "Nill" },
-  { name: "Sukuna V1", hp: "Nill" },
+  { name: "Deku", category: "Spawnable", default: "15K" },
+  { name: "Excaliber", category: "Spawnable", default: "45K" },
+  { name: "Gojo", category: "Spawnable", default: "55K" },
+  { name: "Sukuna", category: "Spawnable", default: "60K" },
+  { name: "Sung Jin Woo", category: "Non-Spawnable", default: "65K" },
+  { name: "Rimuru", category: "Spawnable", default: "500K" },
+  { name: "Aizen", category: "Spawnable", default: "900K" },
+  { name: "Cid", category: "Dungeon", easy: "507,5K", medium: "1,0875M", hard: "1,8125M", extreme: "2,5375M" },
+  { name: "Alpha (Miniboss From Cid Castle)", category: "Dungeon", easy: "90K", medium: "580K", hard: "870K", extreme: "1,16M" },
+  { name: "Raiden", category: "Dungeon", easy: "250K", medium: "650K", hard: "1.2M", extreme: "1.65M" },
+  { name: "Gilgamesh", category: "Spawnable", easy: "300K", medium: "800K", hard: "1.45M", extreme: "2.6M" },
+  { name: "Gojo Shinjuku", category: "Spawnable", easy: "450K", medium: "960K", hard: "1.74M", extreme: "3M" },
+  { name: "Sukuna Shinjuku", category: "Spawnable", easy: "450K", medium: "960K", hard: "1.74M", extreme: "3M" },
+  { name: "Kokushibo", category: "Spawnable", easy: "385K", medium: "935k", hard: "1.76M", extreme: "3.3M" },
+  { name: "Miyabi", category: "Dungeon", easy: "820K", medium: "1.5M", hard: "2.4M", extreme: "3.5M" },
+  { name: "Shadow Monarch", category: "Dungeon", easy: "1M", medium: "2M", hard: "4M", extreme: "6M" },
+  { name: "Shadow Monarch Clone", category: "Spawnable", default: "6.5M" },
+  { name: "Yhwach", category: "Dungeon", easy: "2M", medium: "4.5M", hard: "8M", extreme: "12M" },
+  { name: "All Mini Bosses From Wandenreich", category: "Dungeon", easy: "1.2M", medium: "2.4M", hard: "4.8M", extreme: "6.2M" },
+  { name: "Fire Fly", category: "Dungeon", easy: "1.5M", medium: "3M", hard: "7.5M", extreme: "12.5M" },
+  { name: "Protosam Type III (Miniboss From Glamoth Planet)", category: "Dungeon", easy: "1,125M", medium: "2.25M", hard: "4.5M", extreme: "6.75M" },
+  { name: "Excaliber Morgan", category: "Dungeon", easy: "1.7M", medium: "3.4M", hard: "6.8M", extreme: "10.2M" },
+  { name: "Medusa (Miniboss From Ryuudo Cave)", category: "Dungeon", easy: "850K", medium: "1.7M", hard: "3.4M", extreme: "5.1M" }, 
+  { name: "Yi Sang Full Power", category: "Dungeon", easy: "3.04M", medium: "6.08M", hard: "10M", extreme: "16M" },
+  { name: "Yi Sang Half Power (Miniboss From Butterfly Grave)", category: "Dungeon", easy: "1.02M", medium: "2.04M", hard: "4.08M", extreme: "5.5M" },
+  { name: "Vizard Ichigo", category: "Spawnable", easy: "3.35M", medium: "6.7M", hard: "11M", extreme: "17.5M" },
+  { name: "Ulquiorra", category: "Spawnable", easy: "3.5M", medium: "7M", hard: "11.5M", extreme: "18.5M" },
+  { name: "Vizard Ichigo (From Inner Hueco Mundo) ", category: "Dungeon", default: "30M" },
+  { name: "Ulquiorra (From Inner Hueco Mundo)", category: "Dungeon", default: "25M" },
 
 ];
 
@@ -137,7 +171,37 @@ const bosses = [
    EDIT YOUR TOWER BOSSES HERE
    ========================================================= */
 const towerBosses = [
-  { floor: "Floor 5", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 5", name: "Any Boss", hp: "17,565" },
+  { floor: "Floor 10", name: "Any Boss", hp: "28,295" },
+  { floor: "Floor 15", name: "Any Boss", hp: "45,569" },
+  { floor: "Floor 20", name: "Any Boss", hp: "73,390" },
+  { floor: "Floor 25", name: "Any Boss", hp: "116,196" },
+  { floor: "Floor 30", name: "Any Boss", hp: "190,357" },
+  { floor: "Floor 35", name: "Any Boss", hp: "306,572" },
+  { floor: "Floor 40", name: "Any Boss", hp: "493,737" },
+  { floor: "Floor 45", name: "Any Boss", hp: "795,168" },
+  { floor: "Floor 50", name: "Any Boss", hp: "1,280,627" },
+  { floor: "Floor 55", name: "Any Boss", hp: "2,062,463" },
+  { floor: "Floor 60", name: "Any Boss", hp: "3,321,617" },
+  { floor: "Floor 65", name: "Any Boss", hp: "5,349,498" },
+  { floor: "Floor 70", name: "Any Boss", hp: "8,615,421" },
+  { floor: "Floor 75", name: "Any Boss", hp: "13,875,222" },
+  { floor: "Floor 80", name: "Any Boss", hp: "22,346,184" },
+  { floor: "Floor 85", name: "Any Boss", hp: "35,988,752" },
+  { floor: "Floor 90", name: "Any Boss", hp: "57,960,248" },
+  { floor: "Floor 95", name: "Any Boss", hp: "93,345,552" },
+  { floor: "Floor 100", name: "Any Boss", hp: "150,333,952" },
+  { floor: "Floor 105", name: "Any Boss", hp: "242,114,338" },
+  { floor: "Floor 110", name: "Any Boss", hp: "389,927,571" },
+  { floor: "Floor 115", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 120", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 125", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 130", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 135", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 140", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 145", name: "Any Boss", hp: "Nill" },
+  { floor: "Floor 150", name: "Any Boss", hp: "Nill" },
+
 ];
 
 function openPage(pageId, buttonId) {
@@ -148,53 +212,19 @@ function openPage(pageId, buttonId) {
   if(buttonId) document.getElementById(buttonId)?.classList.add("active");
 }
 
-function render(data, filter, listId, countId, emptyId, grouped = false) {
-  const query = filter.trim().toLowerCase();
-  const results = data.filter(b => b.name.toLowerCase().includes(query));
-  const list = document.getElementById(listId);
-  list.innerHTML = "";
-
-  if (grouped) {
-    const floors = [];
-    results.forEach(boss => {
-      const floor = boss.floor || "Unassigned";
-      if (!floors.includes(floor)) floors.push(floor);
-    });
-
-    floors.forEach(floor => {
-      const title = document.createElement("h2");
-      title.style.cssText =
-        "margin:22px 0 10px;font-size:22px;color:#c4a7ff;";
-      title.textContent = floor;
-      list.appendChild(title);
-
-      results.filter(b => (b.floor || "Unassigned") === floor).forEach(boss => {
-        const card = document.createElement("div");
-        card.className = "boss";
-        card.innerHTML = `
-          <div class="boss-name">${escapeHTML(boss.name)}</div>
-          <div class="hp">${escapeHTML(boss.hp)} HP</div>
-        `;
-        list.appendChild(card);
-      });
-    });
-  } else {
-    results.forEach(boss => {
-      const card = document.createElement("div");
-      card.className = "boss";
-      card.innerHTML = `
-        <div class="boss-name">${escapeHTML(boss.name)}</div>
-        <div class="hp">${escapeHTML(boss.hp)} HP</div>
-      `;
-      list.appendChild(card);
-    });
-  }
-
-  document.getElementById(countId).textContent =
-    `${results.length} boss${results.length === 1 ? "" : "es"}`;
-  document.getElementById(emptyId).style.display =
-    results.length ? "none" : "block";
+let selectedCategory = "All";
+function setCategory(category,button){selectedCategory=category;document.querySelectorAll(".category-buttons .navbtn").forEach(b=>b.classList.remove("active"));button.classList.add("active");render(bosses,document.getElementById("bossSearch").value,"bossList","bossCount","bossEmpty");}
+function render(data,filter,listId,countId,emptyId,grouped=false){
+ const query=filter.trim().toLowerCase(); let results=data.filter(b=>{if(grouped) return (b.floor||"Unassigned").toLowerCase().includes(query); return b.name.toLowerCase().includes(query);});
+ if(!grouped && data===bosses && selectedCategory!=="All") results=results.filter(b=>b.category===selectedCategory);
+ const list=document.getElementById(listId); list.innerHTML="";
+ if(grouped){const floors=[];results.forEach(b=>{const f=b.floor||"Unassigned";if(!floors.includes(f))floors.push(f)});floors.forEach(f=>{const t=document.createElement("h2");t.style.cssText="margin:22px 0 10px;font-size:22px;color:#c4a7ff;";t.textContent=f;list.appendChild(t);results.filter(b=>(b.floor||"Unassigned")===f).forEach(b=>{const c=document.createElement("div");c.className="boss";c.innerHTML=`<div class="boss-name">${escapeHTML(b.name)}</div><div class="hp">${escapeHTML(b.hp)} HP</div>`;list.appendChild(c)})})}
+ else {results.forEach(b=>{const c=document.createElement("div");c.className="boss";c.innerHTML=`<div class="boss-name">${escapeHTML(b.name)}</div><div class="click-me">CLICK ON ME →</div>`;c.onclick=()=>openBossModal(b);list.appendChild(c)})}
+ document.getElementById(countId).textContent=`${results.length} boss${results.length===1?"":"es"}`;document.getElementById(emptyId).style.display=results.length?"none":"block";
 }
+
+function openBossModal(b){document.getElementById("modalBossName").textContent=b.name;document.getElementById("modalDefault").textContent=(b.default ?? "Nill")+" HP";document.getElementById("modalEasy").textContent=(b.easy ?? "Nill")+" HP";document.getElementById("modalMedium").textContent=(b.medium ?? "Nill")+" HP";document.getElementById("modalHard").textContent=(b.hard ?? "Nill")+" HP";document.getElementById("modalExtreme").textContent=(b.extreme ?? "Nill")+" HP";document.getElementById("bossModal").style.display="flex";}
+function closeBossModal(){document.getElementById("bossModal").style.display="none";}
 
 function escapeHTML(text) {
   return String(text)
