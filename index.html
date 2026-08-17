@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boss Database</title>
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080a0f;
+    color:#f4f4f5;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+}
+body::before{
+    content:"";
+    position:fixed;
+    inset:-35%;
+    z-index:-2;
+    background:
+        radial-gradient(circle at 15% 25%, rgba(139,92,246,.28), transparent 24%),
+        radial-gradient(circle at 80% 20%, rgba(0,220,255,.22), transparent 25%),
+        radial-gradient(circle at 70% 80%, rgba(255,0,140,.20), transparent 27%),
+        radial-gradient(circle at 20% 80%, rgba(0,255,150,.16), transparent 24%);
+    filter:blur(65px);
+    animation:rgbMove 12s ease-in-out infinite alternate;
+}
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:linear-gradient(120deg,rgba(139,92,246,.06),rgba(0,220,255,.04),rgba(255,0,140,.06),rgba(0,255,150,.04));
+    background-size:300% 300%;
+    animation:rgbShift 10s ease infinite;
+}
+@keyframes rgbMove{
+    0%{transform:translate(-3%,-2%) scale(1)}
+    50%{transform:translate(4%,3%) scale(1.08)}
+    100%{transform:translate(-2%,5%) scale(1.02)}
+}
+@keyframes rgbShift{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+.topbar{position:sticky;top:0;z-index:20;padding:18px 7%;background:rgba(11,13,18,.95);border-bottom:1px solid #252a35;backdrop-filter:blur(10px)}
+.brand{font-size:25px;font-weight:800;letter-spacing:1px}.brand span{color:#8b5cf6}
+.page{display:none}.page.active{display:block}
+.hero{max-width:1100px;margin:auto;padding:75px 22px 35px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(38px,7vw,64px)}
+.hero p{margin:0 auto 28px;color:#9ca3af}
+.buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.navbtn{border:1px solid #343b49;background:#141821;color:#fff;padding:15px 25px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:.18s}
+.navbtn:hover,.navbtn.active{background:#8b5cf6;border-color:#8b5cf6;transform:translateY(-2px)}
+.search{width:min(650px,100%);padding:15px 18px;border:1px solid #303746;border-radius:12px;outline:none;background:#12151d;color:#fff;font-size:16px}
+.search:focus{border-color:#8b5cf6}
+.container{max-width:1100px;margin:auto;padding:15px 22px 60px}
+.back{border:0;background:transparent;color:#9ca3af;cursor:pointer;margin-bottom:20px;font-size:14px}
+.back:hover{color:#fff}
+.count{color:#8f96a3;margin:0 0 15px;font-size:14px}
+.boss-list{display:grid;gap:12px}
+.boss{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;background:#12151d;border:1px solid #252a35;border-radius:14px;transition:.18s}
+.boss:hover{transform:translateY(-2px);border-color:#6d4bc1;background:#151923}
+.boss-name{font-size:18px;font-weight:700}.hp{color:#c4a7ff;font-size:18px;font-weight:800;white-space:nowrap}
+.empty{display:none;text-align:center;padding:35px;color:#858b98}
+footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px;font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span>⚔</span> Boss Database</div>
+</header>
+
+<!-- LOBBY -->
+<section id="lobby" class="page active">
+  <div class="hero">
+    <h1>Boss Database</h1>
+    <p>Choose a boss category to view its HP.</p>
+    <div class="buttons">
+      <button class="navbtn" onclick="openPage('bossPage','bossBtn')">Boss HP</button>
+      <button class="navbtn" onclick="openPage('towerPage','towerBtn')">Tower Bosses HP</button>
+    </div>
+  </div>
+</section>
+
+<!-- BOSS HP -->
+<section id="bossPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
+    <h1>Boss HP</h1>
+    <p>Regular Boss HP List</p>
+    <input id="bossSearch" class="search" type="text" placeholder="Search boss...">
+  </div>
+  <main class="container">
+    <div id="bossCount" class="count"></div>
+    <div id="bossList" class="boss-list"></div>
+    <div id="bossEmpty" class="empty">No boss found.</div>
+  </main>
+</section>
+
+<!-- TOWER BOSS HP -->
+<section id="towerPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
+    <h1>Tower Bosses HP</h1>
+    <p>Tower Boss HP List</p>
+    <input id="towerSearch" class="search" type="text" placeholder="Search tower boss...">
+  </div>
+  <main class="container">
+    <div id="towerCount" class="count"></div>
+    <div id="towerList" class="boss-list"></div>
+    <div id="towerEmpty" class="empty">No tower boss found.</div>
+  </main>
+</section>
+
+<footer>Boss Database</footer>
+
+<script>
+/* =========================================================
+   EDIT YOUR REGULAR BOSSES HERE
+   ========================================================= */
+const bosses = [
+  { name: "Deku", hp: "Nill" },
+  { name: "Excaliber", hp: "Nill" },
+  { name: "Gojo V1", hp: "Nill" },
+  { name: "Sukuna V1", hp: "Nill" },
+
+];
+
+/* =========================================================
+   EDIT YOUR TOWER BOSSES HERE
+   ========================================================= */
+const towerBosses = [
+  { floor: "Floor 5", name: "Any Boss", hp: "Nill" },
+];
+
+function openPage(pageId, buttonId) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  document.querySelectorAll(".navbtn").forEach(b => b.classList.remove("active"));
+  if(buttonId) document.getElementById(buttonId)?.classList.add("active");
+}
+
+function render(data, filter, listId, countId, emptyId, grouped = false) {
+  const query = filter.trim().toLowerCase();
+  const results = data.filter(b => b.name.toLowerCase().includes(query));
+  const list = document.getElementById(listId);
+  list.innerHTML = "";
+
+  if (grouped) {
+    const floors = [];
+    results.forEach(boss => {
+      const floor = boss.floor || "Unassigned";
+      if (!floors.includes(floor)) floors.push(floor);
+    });
+
+    floors.forEach(floor => {
+      const title = document.createElement("h2");
+      title.style.cssText =
+        "margin:22px 0 10px;font-size:22px;color:#c4a7ff;";
+      title.textContent = floor;
+      list.appendChild(title);
+
+      results.filter(b => (b.floor || "Unassigned") === floor).forEach(boss => {
+        const card = document.createElement("div");
+        card.className = "boss";
+        card.innerHTML = `
+          <div class="boss-name">${escapeHTML(boss.name)}</div>
+          <div class="hp">${escapeHTML(boss.hp)} HP</div>
+        `;
+        list.appendChild(card);
+      });
+    });
+  } else {
+    results.forEach(boss => {
+      const card = document.createElement("div");
+      card.className = "boss";
+      card.innerHTML = `
+        <div class="boss-name">${escapeHTML(boss.name)}</div>
+        <div class="hp">${escapeHTML(boss.hp)} HP</div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  document.getElementById(countId).textContent =
+    `${results.length} boss${results.length === 1 ? "" : "es"}`;
+  document.getElementById(emptyId).style.display =
+    results.length ? "none" : "block";
+}
+
+function escapeHTML(text) {
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+document.getElementById("bossSearch").addEventListener("input", e =>
+  render(bosses,e.target.value,"bossList","bossCount","bossEmpty")
+);
+
+document.getElementById("towerSearch").addEventListener("input", e =>
+  render(towerBosses,e.target.value,"towerList","towerCount","towerEmpty",true)
+);
+
+render(bosses,"","bossList","bossCount","bossEmpty");
+render(towerBosses,"","towerList","towerCount","towerEmpty",true);
+</script>
+</body>
+</html>
