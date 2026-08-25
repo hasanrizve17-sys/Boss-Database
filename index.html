@@ -86,6 +86,8 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
     <div class="buttons">
       <button class="navbtn" onclick="openPage('bossPage','bossBtn')">Boss HP</button>
       <button class="navbtn" onclick="openPage('towerPage','towerBtn')">Tower Bosses HP</button>
+      <button class="navbtn" onclick="openPage('simulatedPage')">Simulated Sea Boss's HP</button>
+      <button class="navbtn" onclick="openPage('abyssalPage')">Abyssal Sea Boss's HP</button>
     </div>
   </div>
 </section>
@@ -126,6 +128,45 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
   </main>
 </section>
 
+
+
+<!-- SIMULATED SEA -->
+<section id="simulatedPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
+    <h1>Simulated Sea Boss's HP</h1>
+    <p>Choose a sea to view its Elite and Boss HP.</p>
+  </div>
+  <main class="container"><div id="simulatedSeaList" class="boss-list"></div></main>
+</section>
+
+<section id="simulatedSeaDetailPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('simulatedPage')">← Back to Simulated Sea</button>
+    <h1 id="simulatedSeaTitle">Sea 1</h1>
+    <p>Choose a boss type.</p>
+  </div>
+  <main class="container"><div id="simulatedSeaBossList" class="boss-list"></div></main>
+</section>
+
+<!-- ABYSSAL SEA -->
+<section id="abyssalPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
+    <h1>Abyssal Sea Boss's HP</h1>
+    <p>Choose a room category.</p>
+  </div>
+  <main class="container"><div id="abyssalRoomCategories" class="boss-list"></div></main>
+</section>
+
+<section id="abyssalRoomPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('abyssalPage')">← Back to Abyssal Sea</button>
+    <h1 id="abyssalRoomTitle">Gladius Room</h1>
+    <p>Choose a room.</p>
+  </div>
+  <main class="container"><div id="abyssalRoomList" class="boss-list"></div></main>
+</section>
 
 <div id="bossModal" class="modal-overlay" onclick="if(event.target===this)closeBossModal()"><div class="modal"><div class="modal-head"><h2 id="modalBossName">Boss</h2><button class="close-btn" onclick="closeBossModal()">✕</button></div><div class="difficulty-grid"><div class="difficulty"><div class="difficulty-title">Default</div><div id="modalDefault" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Easy</div><div id="modalEasy" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Medium</div><div id="modalMedium" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Hard</div><div id="modalHard" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Extreme</div><div id="modalExtreme" class="difficulty-hp">- HP</div></div></div></div></div>
 <footer>Boss Database</footer>
@@ -204,6 +245,71 @@ const towerBosses = [
 
 ];
 
+
+/* =========================================================
+   SIMULATED SEA + ABYSSAL SEA
+   Edit the names/HP yourself later.
+   ========================================================= */
+const simulatedSeas = [
+  {name:"Sea 1", elite:{name:"Elite's",hp:"1.3M"}, boss:{name:"Boss",hp:"2.5M"}},
+  {name:"Sea 2", elite:{name:"Elite's",hp:"3.9M"}, boss:{name:"Boss",hp:"7.5M"}},
+  {name:"Sea 3", elite:{name:"Elite's",hp:"13M"}, boss:{name:"Boss",hp:"25M"}},
+  {name:"Sea 4", elite:{name:"Elite's",hp:"26M"}, boss:{name:"Boss",hp:"50M"}},
+  {name:"Sea 5", elite:{name:"Elite's",hp:"45.5M"}, boss:{name:"Boss",hp:"87.5M"}}
+];
+
+const abyssalRooms = [
+  {name:"Gladius Room", rooms:[{name:"Room 1",hp:"35M"},{name:"Room 2",hp:"45M"},{name:"Room 3",hp:"50M"},{name:"Room 4",hp:"65M"}]},
+  {name:"Nexus Room", rooms:[{name:"Room 1",hp:"50M"},{name:"Room 2",hp:"55M"},{name:"Room 3",hp:"65M"},{name:"Room 4",hp:"75M"}]},
+  {name:"Punguns Room", rooms:[{name:"Room 1",hp:"35M"},{name:"Room 2",hp:"45M"},{name:"Room 3",hp:"50M"},{name:"Room 4",hp:"65M"}]}
+];
+
+function renderSimulatedSeas(){
+  const list=document.getElementById("simulatedSeaList");
+  list.innerHTML="";
+  simulatedSeas.forEach(sea=>{
+    const c=document.createElement("div");
+    c.className="boss";
+    c.innerHTML=`<div class="boss-name">${escapeHTML(sea.name)}</div><div class="click-me">CLICK ON ME →</div>`;
+    c.onclick=()=>{
+      document.getElementById("simulatedSeaTitle").textContent=sea.name;
+      const inner=document.getElementById("simulatedSeaBossList");
+      inner.innerHTML="";
+      [sea.elite,sea.boss].forEach(item=>{
+        const b=document.createElement("div");
+        b.className="boss";
+        b.innerHTML=`<div class="boss-name">${escapeHTML(item.name)}</div><div class="hp">${escapeHTML(item.hp)} HP</div>`;
+        inner.appendChild(b);
+      });
+      openPage("simulatedSeaDetailPage");
+    };
+    list.appendChild(c);
+  });
+}
+
+function renderAbyssalRooms(){
+  const list=document.getElementById("abyssalRoomCategories");
+  list.innerHTML="";
+  abyssalRooms.forEach(group=>{
+    const c=document.createElement("div");
+    c.className="boss";
+    c.innerHTML=`<div class="boss-name">${escapeHTML(group.name)}</div><div class="click-me">CLICK ON ME →</div>`;
+    c.onclick=()=>{
+      document.getElementById("abyssalRoomTitle").textContent=group.name;
+      const inner=document.getElementById("abyssalRoomList");
+      inner.innerHTML="";
+      group.rooms.forEach(room=>{
+        const r=document.createElement("div");
+        r.className="boss";
+        r.innerHTML=`<div class="boss-name">${escapeHTML(room.name)}</div><div class="hp">${escapeHTML(room.hp)} HP</div>`;
+        inner.appendChild(r);
+      });
+      openPage("abyssalRoomPage");
+    };
+    list.appendChild(c);
+  });
+}
+
 function openPage(pageId, buttonId) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById(pageId).classList.add("active");
@@ -245,6 +351,8 @@ document.getElementById("towerSearch").addEventListener("input", e =>
 
 render(bosses,"","bossList","bossCount","bossEmpty");
 render(towerBosses,"","towerList","towerCount","towerEmpty",true);
+renderSimulatedSeas();
+renderAbyssalRooms();
 </script>
 </body>
 </html>
