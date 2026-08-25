@@ -88,6 +88,7 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
       <button class="navbtn" onclick="openPage('towerPage','towerBtn')">Tower Bosses HP</button>
       <button class="navbtn" onclick="openPage('simulatedPage')">Simulated Sea Boss's HP</button>
       <button class="navbtn" onclick="openPage('abyssalPage')">Abyssal Sea Boss's HP</button>
+      <button id="trialBtn" class="navbtn" onclick="openPage('trialPage','trialBtn')">Trial</button>
     </div>
   </div>
 </section>
@@ -168,6 +169,16 @@ footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px
   <main class="container"><div id="abyssalRoomList" class="boss-list"></div></main>
 </section>
 
+<!-- TRIAL -->
+<section id="trialPage" class="page">
+  <div class="hero">
+    <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
+    <h1>Trial</h1>
+    <p>Choose a difficulty to view the Trial HP.</p>
+  </div>
+  <main class="container"><div id="trialList" class="boss-list"></div></main>
+</section>
+
 <div id="bossModal" class="modal-overlay" onclick="if(event.target===this)closeBossModal()"><div class="modal"><div class="modal-head"><h2 id="modalBossName">Boss</h2><button class="close-btn" onclick="closeBossModal()">✕</button></div><div class="difficulty-grid"><div class="difficulty"><div class="difficulty-title">Default</div><div id="modalDefault" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Easy</div><div id="modalEasy" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Medium</div><div id="modalMedium" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Hard</div><div id="modalHard" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Extreme</div><div id="modalExtreme" class="difficulty-hp">- HP</div></div></div></div></div>
 <footer>Boss Database</footer>
 
@@ -205,6 +216,8 @@ const bosses = [
   { name: "Ulquiorra", category: "Spawnable", easy: "3.5M", medium: "7M", hard: "11.5M", extreme: "18.5M" },
   { name: "Vizard Ichigo (From Inner Hueco Mundo) ", category: "Dungeon", default: "30M" },
   { name: "Ulquiorra (From Inner Hueco Mundo)", category: "Dungeon", default: "25M" },
+  { name: "Yuji", category: "Spawnable", default: "57.5K" },
+  { name: "Frieren", category: "Spawnable", easy: "3.7M", medium: "7.4M", hard: "12.1M", extreme: "19.4M" },
 
 ];
 
@@ -310,6 +323,25 @@ function renderAbyssalRooms(){
   });
 }
 
+/* TRIAL HP - EDIT HERE */
+const trialDifficulties = [
+  {name:"Easy", hp:"17.5K"},
+  {name:"Medium", hp:"65K"},
+  {name:"Hard", hp:"200K"},
+  {name:"Extreme", hp:"450K"}
+];
+
+function renderTrials(){
+  const list=document.getElementById("trialList");
+  list.innerHTML="";
+  trialDifficulties.forEach(trial=>{
+    const card=document.createElement("div");
+    card.className="boss";
+    card.innerHTML=`<div class="boss-name">${escapeHTML(trial.name)}</div><div class="hp">${escapeHTML(trial.hp)} HP</div>`;
+    list.appendChild(card);
+  });
+}
+
 function openPage(pageId, buttonId) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById(pageId).classList.add("active");
@@ -353,6 +385,7 @@ render(bosses,"","bossList","bossCount","bossEmpty");
 render(towerBosses,"","towerList","towerCount","towerEmpty",true);
 renderSimulatedSeas();
 renderAbyssalRooms();
+renderTrials();
 </script>
 </body>
 </html>
