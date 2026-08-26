@@ -240,6 +240,596 @@ footer{
     box-shadow:0 0 12px rgba(196,167,255,.45);
 }
 
+
+/* ===== ULTRA UI UPGRADE ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root{
+  --display:'Cinzel Decorative','Cinzel',serif;
+  --ui:'Rajdhani','Cinzel',sans-serif;
+  --accent:#b58cff;
+  --accent2:#7c4dff;
+  --cyan:#7ee7ff;
+  --panel:rgba(8,10,17,.70);
+  --panel2:rgba(17,13,28,.78);
+  --border:rgba(181,140,255,.28);
+  --text:#f7f4ff;
+  --muted:#b6b1c7;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--ui)!important;
+  background:#05060a!important;
+  color:var(--text);
+  letter-spacing:.35px;
+}
+body::selection{background:var(--accent);color:#08060e}
+
+#backgroundVideo{
+  filter:saturate(1.12) contrast(1.06) brightness(.55);
+  transform:scale(1.015);
+}
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(124,77,255,.16),transparent 34%),
+    linear-gradient(180deg,rgba(3,4,8,.10),rgba(3,4,8,.54));
+}
+body > header, body > section, body > footer, .modal-overlay{z-index:2!important}
+
+.topbar{
+  padding:15px 6%!important;
+  background:rgba(5,6,11,.68)!important;
+  border-bottom:1px solid rgba(181,140,255,.20)!important;
+  box-shadow:0 8px 35px rgba(0,0,0,.32),inset 0 -1px rgba(255,255,255,.03);
+  backdrop-filter:blur(18px)!important;
+}
+.brand{
+  font-family:var(--display)!important;
+  font-size:22px!important;
+  letter-spacing:2.5px!important;
+  text-shadow:0 0 18px rgba(181,140,255,.35);
+}
+
+.hero{
+  position:relative;
+  padding:88px 22px 42px!important;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  width:min(620px,80vw);
+  height:220px;
+  left:50%;
+  top:38px;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse,rgba(124,77,255,.13),transparent 68%);
+  pointer-events:none;
+}
+.hero h1{
+  position:relative;
+  font-family:var(--display)!important;
+  font-size:clamp(38px,6.7vw,72px)!important;
+  font-weight:900!important;
+  line-height:1.05;
+  letter-spacing:3px!important;
+  text-transform:uppercase;
+  text-shadow:0 4px 0 rgba(0,0,0,.55),0 0 35px rgba(181,140,255,.30);
+}
+.hero h1:after{
+  content:"";
+  display:block;
+  width:150px;
+  height:2px;
+  margin:18px auto 0;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--cyan),var(--accent),transparent);
+  box-shadow:0 0 18px rgba(181,140,255,.65);
+}
+.hero p{
+  position:relative;
+  font-family:var(--ui)!important;
+  font-size:18px!important;
+  color:#c7c2d5!important;
+  letter-spacing:1.3px!important;
+}
+
+.buttons,.category-buttons{
+  position:relative;
+  gap:12px!important;
+}
+
+.navbtn{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:48px;
+  padding:14px 24px!important;
+  font-family:var(--ui)!important;
+  font-size:15px!important;
+  font-weight:700!important;
+  letter-spacing:1.2px!important;
+  text-transform:uppercase;
+  color:#f8f5ff!important;
+  background:linear-gradient(135deg,rgba(19,17,29,.88),rgba(8,10,17,.86))!important;
+  border:1px solid rgba(181,140,255,.30)!important;
+  border-radius:6px!important;
+  box-shadow:0 8px 25px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.06);
+  clip-path:polygon(9px 0,calc(100% - 9px) 0,100% 9px,100% calc(100% - 9px),calc(100% - 9px) 100%,9px 100%,0 calc(100% - 9px),0 9px);
+  transition:.22s cubic-bezier(.2,.8,.2,1)!important;
+}
+.navbtn:before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  z-index:-1;
+  background:linear-gradient(110deg,transparent 30%,rgba(181,140,255,.13),transparent 70%);
+  transform:translateX(-110%);
+  transition:.55s ease;
+}
+.navbtn:after{
+  content:"";
+  position:absolute;
+  left:10px;right:10px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:.7;
+}
+.navbtn:hover:before{transform:translateX(110%)}
+.navbtn:hover,.navbtn.active{
+  background:linear-gradient(135deg,rgba(104,63,183,.88),rgba(44,27,82,.94))!important;
+  border-color:rgba(210,187,255,.85)!important;
+  transform:translateY(-4px) scale(1.02)!important;
+  box-shadow:0 14px 35px rgba(0,0,0,.42),0 0 25px rgba(124,77,255,.26),inset 0 1px rgba(255,255,255,.10);
+}
+
+.search{
+  font-family:var(--ui)!important;
+  font-size:17px!important;
+  letter-spacing:1px;
+  background:rgba(5,7,12,.72)!important;
+  border:1px solid rgba(181,140,255,.30)!important;
+  border-radius:7px!important;
+  box-shadow:inset 0 0 25px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.22);
+  backdrop-filter:blur(12px);
+}
+.search:focus{
+  border-color:var(--accent)!important;
+  box-shadow:0 0 0 3px rgba(181,140,255,.08),0 0 25px rgba(124,77,255,.18)!important;
+}
+.search::placeholder{color:#858094!important}
+
+.container{padding-top:10px!important}
+.count{
+  font-family:var(--ui)!important;
+  color:#bdb6cc!important;
+  letter-spacing:1px!important;
+  text-transform:uppercase;
+}
+
+.boss-list{gap:14px!important}
+.boss{
+  position:relative;
+  overflow:hidden;
+  min-height:68px;
+  padding:19px 22px 19px 25px!important;
+  background:linear-gradient(105deg,rgba(8,10,17,.80),rgba(22,16,35,.68))!important;
+  border:1px solid rgba(181,140,255,.20)!important;
+  border-radius:7px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.025);
+  backdrop-filter:blur(10px);
+}
+.boss:before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--cyan),var(--accent),var(--accent2));
+  box-shadow:0 0 12px rgba(181,140,255,.45);
+}
+.boss:after{
+  content:"";
+  position:absolute;
+  width:130px;height:130px;
+  right:-55px;top:-45px;
+  background:radial-gradient(circle,rgba(181,140,255,.10),transparent 70%);
+  pointer-events:none;
+}
+.boss:hover{
+  transform:translateY(-4px)!important;
+  border-color:rgba(181,140,255,.55)!important;
+  background:linear-gradient(105deg,rgba(12,14,23,.88),rgba(35,22,54,.75))!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.40),0 0 22px rgba(124,77,255,.12)!important;
+}
+.boss-name{
+  font-family:var(--ui)!important;
+  font-size:20px!important;
+  font-weight:700!important;
+  letter-spacing:.8px!important;
+}
+.hp{
+  font-family:var(--ui)!important;
+  color:#d8c9ff!important;
+  font-size:19px!important;
+  text-shadow:0 0 12px rgba(181,140,255,.25);
+}
+.click-me{
+  font-family:var(--ui)!important;
+  letter-spacing:1.4px!important;
+  font-weight:700!important;
+  color:#bca7ff!important;
+}
+
+.empty{
+  font-family:var(--ui)!important;
+  font-size:18px;
+}
+
+.modal-overlay{
+  background:rgba(2,3,7,.76)!important;
+  backdrop-filter:blur(8px);
+}
+.modal{
+  position:relative;
+  background:linear-gradient(145deg,rgba(13,12,21,.96),rgba(7,9,15,.97))!important;
+  border:1px solid rgba(181,140,255,.38)!important;
+  border-radius:9px!important;
+  box-shadow:0 30px 100px rgba(0,0,0,.72),0 0 35px rgba(124,77,255,.14)!important;
+}
+.modal h2{
+  font-family:var(--display)!important;
+  letter-spacing:2px!important;
+  text-transform:uppercase;
+}
+.close-btn{
+  font-family:var(--ui)!important;
+  background:rgba(181,140,255,.12)!important;
+  border:1px solid rgba(181,140,255,.22);
+  transition:.2s;
+}
+.close-btn:hover{
+  background:rgba(124,77,255,.35)!important;
+  transform:rotate(90deg);
+}
+.difficulty{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(9,11,18,.92),rgba(25,17,38,.78))!important;
+  border:1px solid rgba(181,140,255,.20)!important;
+  border-radius:7px!important;
+}
+.difficulty:hover{
+  border-color:rgba(181,140,255,.55)!important;
+  transform:translateY(-2px);
+}
+.difficulty-title{
+  font-family:var(--ui)!important;
+  text-transform:uppercase;
+  letter-spacing:1.3px!important;
+}
+.difficulty-hp{
+  font-family:var(--ui)!important;
+  color:#d8c9ff!important;
+  text-shadow:0 0 14px rgba(181,140,255,.3);
+}
+footer{
+  position:relative;
+  font-family:var(--ui)!important;
+  letter-spacing:1.2px!important;
+  background:rgba(3,4,8,.35);
+}
+
+/* scrollbar */
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:#05060a}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent2),var(--accent));border-radius:20px}
+::-webkit-scrollbar-thumb:hover{background:#c9b0ff}
+
+/* footer */
+.site-footer{
+  position:relative;
+  margin:40px 14px 14px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:28px;
+  overflow:hidden;
+  background:rgba(7,8,13,.78);
+  backdrop-filter:blur(14px);
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  color:#f4f2f8;
+  text-align:left;
+}
+.footer-main{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr;
+  gap:70px;
+  padding:38px 40px 34px;
+}
+.footer-brand-name{
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:2.5px;
+  color:#aaa4b5;
+  margin-bottom:34px;
+}
+.footer-brand-name span{margin-right:8px;color:#d8c9ff}
+.footer-brand h2{
+  margin:0 0 24px;
+  font-size:31px;
+  letter-spacing:-1px;
+  color:#fff;
+}
+.footer-brand p{
+  margin:0;
+  max-width:440px;
+  line-height:1.75;
+  color:#aaa8b1;
+  font-size:15px;
+  letter-spacing:.2px;
+}
+.footer-column h3{
+  margin:2px 0 24px;
+  font-size:13px;
+  letter-spacing:3px;
+  color:#ddd8e5;
+}
+.footer-column button{
+  display:block;
+  border:0;
+  background:none;
+  padding:0;
+  margin:0 0 20px;
+  color:#b8b5bf;
+  font:inherit;
+  font-size:16px;
+  cursor:pointer;
+  transition:color .2s, transform .2s;
+}
+.footer-column button:hover{color:#fff;transform:translateX(3px)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.10);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+  padding:25px 40px 20px;
+}
+.footer-bottom>p{
+  margin:0;
+  max-width:720px;
+  line-height:1.65;
+  color:#85828c;
+  font-size:13px;
+}
+.footer-actions{
+  display:grid;
+  grid-template-columns:auto auto;
+  align-items:center;
+  justify-items:end;
+  gap:13px;
+  min-width:440px;
+}
+.footer-actions button,
+.footer-actions a{
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:24px;
+  padding:11px 16px;
+  background:rgba(255,255,255,.04);
+  color:#c9c5ce;
+  text-decoration:none;
+  font:inherit;
+  font-size:12px;
+  letter-spacing:1.5px;
+  white-space:nowrap;
+}
+.footer-actions button{cursor:pointer}
+.footer-actions button:hover,.footer-actions a:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.footer-actions span{
+  grid-column:1 / -1;
+  color:#77737e;
+  font-size:12px;
+  letter-spacing:.7px;
+}
+
+/* mobile */
+@media(max-width:650px){
+  .hero{padding-top:65px!important}
+  .hero h1{letter-spacing:1.5px!important}
+  .navbtn{width:100%;max-width:360px}
+  .boss{padding:17px 17px 17px 21px!important}
+  .boss-name{font-size:18px!important}
+  .hp{font-size:17px!important}
+}
+
+
+/* compact footer + credits */
+.site-footer{margin:28px 12px 12px;border-radius:20px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-main{gap:42px;padding:28px 30px 24px}
+.footer-brand-name{margin-bottom:20px;font-size:12px}
+.footer-brand h2{font-size:25px;margin-bottom:16px}
+.footer-brand p{font-size:13px;line-height:1.6;max-width:360px}
+.footer-column h3{margin-bottom:18px;font-size:12px}
+.footer-column button,.footer-link{font-size:14px!important;margin-bottom:14px!important}
+.footer-link{display:block;color:#b8b5bf;text-decoration:none;transition:color .2s,transform .2s}
+.footer-link:hover{color:#fff;transform:translateX(3px)}
+.footer-bottom{gap:20px;padding:18px 30px 16px}
+.footer-bottom>p{font-size:11px;max-width:600px}
+.footer-actions{min-width:360px;gap:9px}
+.footer-actions button,.footer-actions a{padding:9px 13px;font-size:10px}
+.footer-actions span{font-size:10px}
+.credits-container{max-width:850px;margin:0 auto;padding:0 22px 70px}
+.credit-section{background:rgba(7,8,13,.72);border:1px solid rgba(255,255,255,.11);border-radius:18px;padding:24px;margin-bottom:18px;backdrop-filter:blur(10px)}
+.credit-section h2{margin:0 0 16px;color:#fff;font-size:21px;letter-spacing:1px}
+.credit-card{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 16px;margin-top:9px;border:1px solid rgba(196,167,255,.18);background:rgba(18,21,29,.7);border-radius:12px}
+.credit-role{font-weight:700;color:#eee}
+.discord-id{font-family:monospace;color:#c4a7ff;font-size:14px}
+@media(max-width:650px){
+  .footer-main{grid-template-columns:1fr;gap:24px;padding:24px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;padding:18px 24px}
+  .footer-actions{min-width:0;width:100%;grid-template-columns:1fr}
+  .footer-actions span{grid-column:auto}
+  .credit-card{align-items:flex-start;flex-direction:column;gap:6px}
+}
+
+
+/* final compact footer + clickable credits */
+.site-footer{
+  margin:18px auto 8px!important;
+  max-width:1200px!important;
+  border-radius:16px!important;
+}
+.footer-main{
+  gap:32px!important;
+  padding:20px 28px 18px!important;
+}
+.footer-brand-name{margin-bottom:12px!important;font-size:11px!important}
+.footer-brand h2{font-size:22px!important;margin-bottom:10px!important}
+.footer-brand p{font-size:12px!important;line-height:1.45!important}
+.footer-column h3{margin-bottom:11px!important;font-size:11px!important}
+.footer-column button,.footer-link{font-size:13px!important;margin-bottom:9px!important}
+.footer-bottom{gap:12px!important;padding:11px 28px 10px!important}
+.footer-bottom>p{font-size:10px!important;line-height:1.4!important;max-width:620px!important}
+.footer-actions{min-width:0!important;display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important}
+.footer-actions a{padding:7px 10px!important;font-size:9px!important}
+.footer-actions span{font-size:9px!important}
+.credit-section{padding:18px!important;margin-bottom:12px!important}
+.credit-section h2{margin-bottom:10px!important;font-size:18px!important}
+.credit-card{padding:10px 13px!important;margin-top:7px!important;border-radius:9px!important}
+.credit-name{font-weight:800;color:#fff;text-decoration:none;transition:.2s}
+.credit-name:hover{color:#c4a7ff;text-decoration:underline}
+.credit-id-link{font-family:monospace;color:#a995cf;text-decoration:none;font-size:12px}
+.credit-id-link:hover{color:#fff}
+.credit-card-left{display:flex;align-items:center;gap:10px;min-width:0}
+.discord-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(139,92,246,.18);border:1px solid rgba(196,167,255,.25);color:#c4a7ff;font-size:13px;flex:0 0 auto}
+@media(max-width:650px){
+ .footer-main{gap:18px!important;padding:18px!important}
+ .footer-bottom{padding:11px 18px 10px!important}
+ .footer-actions{width:100%!important}
+}
+
+
+/* ===== LAYOUT UPDATE ===== */
+html,body{min-height:100%;overflow-x:hidden;overflow-y:auto!important}
+.hero{max-width:1450px!important;width:100%!important;padding-left:4vw!important;padding-right:4vw!important;padding-bottom:70px!important}
+/* Create a clearer gap between the main buttons and the description */
+#lobby .hero p{margin-top:38px!important;margin-bottom:34px!important;max-width:1050px!important;font-size:19px!important;line-height:1.7!important}
+#lobby .buttons{margin-top:0!important}
+/* Keep descriptions lower and give page content room to scroll */
+.hero p{max-width:1200px!important;line-height:1.65!important}
+.page{min-height:100vh;padding-bottom:30px}
+.container,.credits-container{max-width:1450px!important;width:min(96vw,1450px)!important}
+@media(max-width:650px){
+  #lobby .hero p{margin-top:30px!important;margin-bottom:28px!important;font-size:17px!important}
+  .hero{padding-left:18px!important;padding-right:18px!important;padding-bottom:55px!important}
+  .container,.credits-container{width:100%!important}
+}
+
+
+/* ===== LOBBY: NEW CREDIT SECTION ABOVE DESCRIPTION ===== */
+.lobby-content{max-width:1180px;margin:0 auto;padding:0 22px 70px}
+.lobby-credits{
+  background:rgba(8,10,16,.78);
+  border:1px solid rgba(196,167,255,.26);
+  border-radius:18px;
+  padding:22px;
+  margin:4px 0 24px;
+  box-shadow:0 14px 45px rgba(0,0,0,.28);
+  backdrop-filter:blur(12px);
+}
+.lobby-section-title{
+  margin:0 0 18px;
+  font-size:20px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#f3efff;
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.lobby-section-title:before{
+  content:"✦";
+  color:#c4a7ff;
+  font-size:24px;
+}
+.credit-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.profile-credit{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid rgba(196,167,255,.18);
+  background:linear-gradient(145deg,rgba(24,27,38,.82),rgba(10,12,18,.82));
+  color:#fff;
+  text-decoration:none;
+  transition:.2s ease;
+}
+.profile-credit:hover{
+  transform:translateY(-3px);
+  border-color:rgba(196,167,255,.65);
+  box-shadow:0 10px 25px rgba(111,66,193,.18);
+}
+.profile-avatar{
+  width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;flex:0 0 auto;
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:900;font-size:14px;color:#fff;
+  background:linear-gradient(145deg,#8b5cf6,#312e81);
+  border:2px solid rgba(255,255,255,.14);
+}
+.profile-credit:nth-child(2n) .profile-avatar{background:linear-gradient(145deg,#ec4899,#7c2d12)}
+.profile-credit:nth-child(3n) .profile-avatar{background:linear-gradient(145deg,#38bdf8,#1e3a8a)}
+.profile-meta{min-width:0;flex:1}
+.profile-role{
+  display:block;
+  color:#aaa7b5;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.profile-name{
+  display:block;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:14px;font-weight:900;color:#fff;
+}
+.profile-open{
+  margin-left:auto;
+  color:#c4a7ff;
+  font-size:18px;
+  flex:0 0 auto;
+}
+.description-panel{
+  background:rgba(8,10,16,.72);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:24px 26px;
+  backdrop-filter:blur(10px);
+}
+.description-panel .lobby-section-title{margin-bottom:13px}
+.description-panel p{
+  margin:0;
+  max-width:100%;
+  color:#c4c6cf;
+  font-family:var(--ui-font);
+  line-height:1.8;
+  font-size:16px;
+}
+@media(max-width:850px){.credit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+  .lobby-content{padding:0 14px 50px}
+  .lobby-credits,.description-panel{padding:16px}
+  .credit-grid{grid-template-columns:1fr}
+  .lobby-section-title{font-size:17px;letter-spacing:2px}
+}
+
 </style>
 </head>
 <body>
@@ -249,7 +839,7 @@ footer{
 
 
 <header class="topbar">
-  <div class="brand"><span>⚔</span> Boss Database</div>
+  <div class="brand"><span>⚔</span> BOSS DATABASE <small style="font-family:var(--ui);font-size:10px;letter-spacing:2px;color:#a99ac4;margin-left:8px;vertical-align:middle;">ARCHIVE</small></div>
 </header>
 
 <!-- LOBBY -->
@@ -265,6 +855,38 @@ footer{
       <button id="trialBtn" class="navbtn" onclick="openPage('trialPage','trialBtn')">Trial</button>
     </div>
   </div>
+
+  <main class="lobby-content">
+    <!-- New Credits section: placed ABOVE Description -->
+    <section class="lobby-credits" aria-label="Credits">
+      <h2 class="lobby-section-title">Credits</h2>
+      <div class="credit-grid">
+        <a class="profile-credit" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open KUROSAKI ICHIGO's Discord profile">
+          <span class="profile-avatar">KI</span><span class="profile-meta"><span class="profile-role">Web Developer</span><span class="profile-name">KUROSAKI ICHIGO</span></span><span class="profile-open">›</span>
+        </a>
+        <a class="profile-credit" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open HARU's Discord profile">
+          <span class="profile-avatar">H</span><span class="profile-meta"><span class="profile-role">Boss's HP</span><span class="profile-name">HARU</span></span><span class="profile-open">›</span>
+        </a>
+        <a class="profile-credit" href="https://discord.com/users/1330206826679107600" target="_blank" rel="noopener noreferrer" title="Open Axuela's Discord profile">
+          <span class="profile-avatar">A</span><span class="profile-meta"><span class="profile-role">Trials</span><span class="profile-name">Axuela</span></span><span class="profile-open">›</span>
+        </a>
+        <a class="profile-credit" href="https://discord.com/users/726951765102034974" target="_blank" rel="noopener noreferrer" title="Open Suba's Discord profile">
+          <span class="profile-avatar">S</span><span class="profile-meta"><span class="profile-role">Tower</span><span class="profile-name">Suba</span></span><span class="profile-open">›</span>
+        </a>
+        <a class="profile-credit" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open KUROSAKI ICHIGO's Discord profile">
+          <span class="profile-avatar">KI</span><span class="profile-meta"><span class="profile-role">Simulated Sea</span><span class="profile-name">KUROSAKI ICHIGO</span></span><span class="profile-open">›</span>
+        </a>
+        <a class="profile-credit" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open HARU's Discord profile">
+          <span class="profile-avatar">H</span><span class="profile-meta"><span class="profile-role">Abyssal Sea</span><span class="profile-name">HARU</span></span><span class="profile-open">›</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="description-panel">
+      <h2 class="lobby-section-title">Description</h2>
+      <p>This page contains all boss HP details from Lineage Piece.<br>Search, explore, and be prepared for every battle.</p>
+    </section>
+  </main>
 </section>
 
 <!-- BOSS HP -->
@@ -343,6 +965,33 @@ footer{
   <main class="container"><div id="abyssalRoomList" class="boss-list"></div></main>
 </section>
 
+<!-- CREDITS -->
+<section id="creditsPage" class="page">
+  <div class="hero credits-hero">
+    <button class="back" onclick="openPage('lobby')">← Back to Lobby</button>
+    <h1>Credits</h1>
+    <p>People who helped build and maintain the Boss Database.</p>
+  </div>
+  <main class="credits-container">
+    <section class="credit-section">
+      <h2>Web Dev</h2>
+      <div class="credit-card">
+        <div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Web Developer</span></div>
+        <a class="credit-name" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open Discord profile">KUROSAKI ICHIGO</a>
+      </div>
+    </section>
+
+    <section class="credit-section">
+      <h2>HP Collectors</h2>
+      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Boss's HP</span></div><a class="credit-name" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open Discord profile">HARU</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Trials</span></div><a class="credit-name" href="https://discord.com/users/1330206826679107600" target="_blank" rel="noopener noreferrer" title="Open Discord profile">Axuela</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Tower</span></div><a class="credit-name" href="https://discord.com/users/726951765102034974" target="_blank" rel="noopener noreferrer" title="Open Discord profile">Suba</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Simulated Sea</span></div><a class="credit-name" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open Discord profile">KUROSAKI ICHIGO</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Abyssal Sea</span></div><a class="credit-name" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open Discord profile">HARU</a></div>
+    </section>
+  </main>
+</section>
+
 <!-- TRIAL -->
 <section id="trialPage" class="page">
   <div class="hero">
@@ -354,7 +1003,32 @@ footer{
 </section>
 
 <div id="bossModal" class="modal-overlay" onclick="if(event.target===this)closeBossModal()"><div class="modal"><div class="modal-head"><h2 id="modalBossName">Boss</h2><button class="close-btn" onclick="closeBossModal()">✕</button></div><div class="difficulty-grid"><div class="difficulty"><div class="difficulty-title">Default</div><div id="modalDefault" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Easy</div><div id="modalEasy" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Medium</div><div id="modalMedium" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Hard</div><div id="modalHard" class="difficulty-hp">- HP</div></div><div class="difficulty"><div class="difficulty-title">Extreme</div><div id="modalExtreme" class="difficulty-hp">- HP</div></div></div></div></div>
-<footer>Boss Database</footer>
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-column">
+      <h3>EXPLORE</h3>
+      <button onclick="openPage('bossPage','bossBtn')">Boss HP</button>
+      <button onclick="openPage('towerPage','towerBtn')">Tower Bosses HP</button>
+      <button onclick="openPage('simulatedPage')">Simulated Sea Boss HP</button>
+      <button onclick="openPage('abyssalPage')">Abyssal Sea Boss HP</button>
+      <button onclick="openPage('trialPage','trialBtn')">Trial</button>
+    </div>
+
+    <div class="footer-column">
+      <h3>COMMUNITY</h3>
+      <button type="button" onclick="openPage('creditsPage')">Credits</button>
+      <a class="footer-link" href="https://discord.gg/lineagepiece" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>Boss Database X is an independent fan-made platform and is not affiliated with, endorsed by, or sponsored by Roblox Corporation or any of its trademarks.</p>
+    <div class="footer-actions">
+      <a href="mailto:hasanrizve17@gmail.com">✉ CONTACT: HASANRIZVE17@GMAIL.COM</a>
+      <span>© 2026 Boss Database X. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
 
 <script>
 /* =========================================================
