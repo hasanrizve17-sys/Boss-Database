@@ -44,6 +44,17 @@ body{
 .boss{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;background:#12151d;border:1px solid #252a35;border-radius:14px;transition:.18s}
 .boss:hover{transform:translateY(-2px);border-color:#6d4bc1;background:#151923}
 .boss-name{font-size:18px;font-weight:700}.hp{color:#c4a7ff;font-size:18px;font-weight:800;white-space:nowrap}
+
+/* Boss character thumbnails — stable layout even if an image fails */
+.boss-main{display:flex;align-items:center;gap:16px;min-width:0;position:relative;z-index:2}
+.boss-avatar-wrap{width:64px;height:64px;flex:0 0 64px;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(145deg,#22283a,#10131d);border:1px solid rgba(181,140,255,.42);box-shadow:0 0 18px rgba(124,77,255,.18)}
+.boss-avatar{width:100%;height:100%;object-fit:cover;object-position:center 24%;display:block;opacity:0;transition:opacity .25s ease;position:relative;z-index:2}
+.boss-avatar.loaded{opacity:1}
+.boss-avatar-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#d8c7ff;letter-spacing:.5px;background:linear-gradient(145deg,#252b3d,#12151d);z-index:1}
+.boss-name-wrap{min-width:0}
+.boss-name{overflow-wrap:anywhere}
+@media(max-width:650px){.boss-avatar-wrap{width:54px;height:54px;flex-basis:54px;border-radius:10px}.boss-main{gap:12px}}
+
 .empty{display:none;text-align:center;padding:35px;color:#858b98}
 footer{text-align:center;color:#656b78;border-top:1px solid #202530;padding:25px;font-size:13px}
 .click-me{color:#8b5cf6;font-size:13px;font-weight:800;white-space:nowrap}.boss{cursor:pointer}.category-buttons{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:20px}.modal{width:min(650px,100%);background:#12151d;border:1px solid #343b49;border-radius:18px;padding:26px;box-shadow:0 20px 80px rgba(0,0,0,.6)}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:15px}.close-btn{border:0;background:#252a35;color:#fff;border-radius:9px;padding:9px 12px;cursor:pointer;font-size:18px}.difficulty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.difficulty{padding:20px 12px;background:#0e1118;border:1px solid #2b3040;border-radius:12px;text-align:center}.difficulty-title{font-weight:800;color:#aeb4c1;margin-bottom:8px}.difficulty-hp{font-size:20px;font-weight:900;color:#c4a7ff}@media(max-width:650px){.difficulty-grid{grid-template-columns:1fr}}
@@ -775,6 +786,13 @@ html,body{min-height:100%;overflow-x:hidden;overflow-y:auto!important}
   border-color:rgba(196,167,255,.65);
   box-shadow:0 10px 25px rgba(111,66,193,.18);
 }
+.profile-avatar img,.credit-avatar img{
+  width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;
+}
+.credit-avatar{
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  overflow:hidden;border:2px solid rgba(255,255,255,.14);
+}
 .profile-avatar{
   width:42px;height:42px;border-radius:50%;
   display:grid;place-items:center;flex:0 0 auto;
@@ -862,19 +880,19 @@ html,body{min-height:100%;overflow-x:hidden;overflow-y:auto!important}
       <h2 class="lobby-section-title">Credits</h2>
       <div class="credit-grid">
         <a class="profile-credit" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open KUROSAKI ICHIGO's Discord profile">
-          <span class="profile-avatar">KI</span><span class="profile-meta"><span class="profile-role">Web Developer</span><span class="profile-name">KUROSAKI ICHIGO</span></span><span class="profile-open">›</span>
+          <span class="profile-avatar"><img src="https://i.postimg.cc/3rbrzhd9/download.jpg" alt="KUROSAKI ICHIGO"></span><span class="profile-meta"><span class="profile-role">Web Developer</span><span class="profile-name">KUROSAKI ICHIGO</span></span><span class="profile-open">›</span>
         </a>
         <a class="profile-credit" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open HARU's Discord profile">
           <span class="profile-avatar">H</span><span class="profile-meta"><span class="profile-role">Boss's HP</span><span class="profile-name">HARU</span></span><span class="profile-open">›</span>
         </a>
         <a class="profile-credit" href="https://discord.com/users/1330206826679107600" target="_blank" rel="noopener noreferrer" title="Open Axuela's Discord profile">
-          <span class="profile-avatar">A</span><span class="profile-meta"><span class="profile-role">Trials</span><span class="profile-name">Axuela</span></span><span class="profile-open">›</span>
+          <span class="profile-avatar"><img src="https://i.postimg.cc/FsQCrddh/G2uhy-UIbw-AEazix.png" alt="Axuela"></span><span class="profile-meta"><span class="profile-role">Trials</span><span class="profile-name">Axuela</span></span><span class="profile-open">›</span>
         </a>
         <a class="profile-credit" href="https://discord.com/users/726951765102034974" target="_blank" rel="noopener noreferrer" title="Open Suba's Discord profile">
-          <span class="profile-avatar">S</span><span class="profile-meta"><span class="profile-role">Tower</span><span class="profile-name">Suba</span></span><span class="profile-open">›</span>
+          <span class="profile-avatar"><img src="https://i.postimg.cc/rF8GZSRD/18d386d33a4e9f141368f5629ddac92e.jpg" alt="Suba"></span><span class="profile-meta"><span class="profile-role">Tower</span><span class="profile-name">Suba</span></span><span class="profile-open">›</span>
         </a>
         <a class="profile-credit" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open KUROSAKI ICHIGO's Discord profile">
-          <span class="profile-avatar">KI</span><span class="profile-meta"><span class="profile-role">Simulated Sea</span><span class="profile-name">KUROSAKI ICHIGO</span></span><span class="profile-open">›</span>
+          <span class="profile-avatar"><img src="https://i.postimg.cc/3rbrzhd9/download.jpg" alt="KUROSAKI ICHIGO"></span><span class="profile-meta"><span class="profile-role">Simulated Sea</span><span class="profile-name">KUROSAKI ICHIGO</span></span><span class="profile-open">›</span>
         </a>
         <a class="profile-credit" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open HARU's Discord profile">
           <span class="profile-avatar">H</span><span class="profile-meta"><span class="profile-role">Abyssal Sea</span><span class="profile-name">HARU</span></span><span class="profile-open">›</span>
@@ -976,7 +994,7 @@ html,body{min-height:100%;overflow-x:hidden;overflow-y:auto!important}
     <section class="credit-section">
       <h2>Web Dev</h2>
       <div class="credit-card">
-        <div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Web Developer</span></div>
+        <div class="credit-card-left"><span class="credit-avatar"><img src="https://i.postimg.cc/3rbrzhd9/download.jpg" alt="KUROSAKI ICHIGO"></span><span class="credit-role">Web Developer</span></div>
         <a class="credit-name" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open Discord profile">KUROSAKI ICHIGO</a>
       </div>
     </section>
@@ -984,9 +1002,9 @@ html,body{min-height:100%;overflow-x:hidden;overflow-y:auto!important}
     <section class="credit-section">
       <h2>HP Collectors</h2>
       <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Boss's HP</span></div><a class="credit-name" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open Discord profile">HARU</a></div>
-      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Trials</span></div><a class="credit-name" href="https://discord.com/users/1330206826679107600" target="_blank" rel="noopener noreferrer" title="Open Discord profile">Axuela</a></div>
-      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Tower</span></div><a class="credit-name" href="https://discord.com/users/726951765102034974" target="_blank" rel="noopener noreferrer" title="Open Discord profile">Suba</a></div>
-      <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Simulated Sea</span></div><a class="credit-name" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open Discord profile">KUROSAKI ICHIGO</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="credit-avatar"><img src="https://i.postimg.cc/FsQCrddh/G2uhy-UIbw-AEazix.png" alt="Axuela"></span><span class="credit-role">Trials</span></div><a class="credit-name" href="https://discord.com/users/1330206826679107600" target="_blank" rel="noopener noreferrer" title="Open Discord profile">Axuela</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="credit-avatar"><img src="https://i.postimg.cc/rF8GZSRD/18d386d33a4e9f141368f5629ddac92e.jpg" alt="Suba"></span><span class="credit-role">Tower</span></div><a class="credit-name" href="https://discord.com/users/726951765102034974" target="_blank" rel="noopener noreferrer" title="Open Discord profile">Suba</a></div>
+      <div class="credit-card"><div class="credit-card-left"><span class="credit-avatar"><img src="https://i.postimg.cc/3rbrzhd9/download.jpg" alt="KUROSAKI ICHIGO"></span><span class="credit-role">Simulated Sea</span></div><a class="credit-name" href="https://discord.com/users/1031824269593817088" target="_blank" rel="noopener noreferrer" title="Open Discord profile">KUROSAKI ICHIGO</a></div>
       <div class="credit-card"><div class="credit-card-left"><span class="discord-icon">◉</span><span class="credit-role">Abyssal Sea</span></div><a class="credit-name" href="https://discord.com/users/1510588713116368947" target="_blank" rel="noopener noreferrer" title="Open Discord profile">HARU</a></div>
     </section>
   </main>
@@ -1200,12 +1218,167 @@ function openPage(pageId, buttonId) {
 
 let selectedCategory = "All";
 function setCategory(category,button){selectedCategory=category;document.querySelectorAll(".category-buttons .navbtn").forEach(b=>b.classList.remove("active"));button.classList.add("active");render(bosses,document.getElementById("bossSearch").value,"bossList","bossCount","bossEmpty");}
+
+// Character portrait system.
+// Exact character searches are used for the main anime characters so names do not get
+// accidentally matched to unrelated characters. Direct links below are only fallbacks.
+const bossAvatarUrls = {
+  "Deku":"https://phunuso.mediacdn.vn/603486343963435008/2024/10/11/1800x900-11-1728656412951728879735.jpg",
+  "Excaliber":"https://www.deviantart.com/mdwyer5/art/SAO-Excalibur-927263669",
+  "Gojo":"https://image.zeta-ai.io/profile-image/b4ce1439-4a76-4f92-bf41-59d28dcb72ec/fb14d6fe-57cc-4e01-bb24-b1fdac9a1642/29f5e231-46c6-4eeb-9d4a-b9afe598dacd.jpeg?f=webp&q=75&w=384",
+  "Sukuna":"https://image-0.uhdpaper.com/wallpaper/jujutsu-kaisen-sukuna-phone-wallpaper-4k-uhdpaper.com-637%400%40e.jpg",
+  "Sung Jin Woo":"https://sololeveling-anime.net/assets/img/top/visual2.jpg",
+  "Rimuru":"https://rare-gallery.com/mocahbig/1389862-Rimuru-Tempest-Tensei-shitara-Slime-Datta-Ken-anime.jpg",
+  "Aizen":"https://www.xtrafondos.com/wallpapers/vertical/aizen-bleach-anime-11099.jpg",
+  "Cid":"https://wall.alphacoders.com/big.php?i=1336115",
+  "Alpha (Miniboss From Cid Castle)":"https://i.pinimg.com/736x/4d/6e/86/4d6e86e2c6e2bce47c3bb6b4e8bb0b57.jpg",
+  "Raiden":"https://assets1.ignimgs.com/thumbs/userUploaded/2021/8/26/genshinimpactraidenshogunblog-1629972683598.jpg?width=1280",
+  "Gilgamesh":"https://i.pinimg.com/originals/6f/40/ff/6f40ff3d2c6aeee07b677c6838ea80ee.jpg",
+  "Gojo Shinjuku":"https://image.zeta-ai.io/profile-image/b4ce1439-4a76-4f92-bf41-59d28dcb72ec/fb14d6fe-57cc-4e01-bb24-b1fdac9a1642/29f5e231-46c6-4eeb-9d4a-b9afe598dacd.jpeg?f=webp&q=75&w=384",
+  "Sukuna Shinjuku":"https://image-0.uhdpaper.com/wallpaper/jujutsu-kaisen-sukuna-phone-wallpaper-4k-uhdpaper.com-637%400%40e.jpg",
+  "Kokushibo":"https://wallpapers.com/images/featured/demon-slayer-kokushibo-5i0dzkpgyy3ipd0m.jpg",
+  "Miyabi":"https://static.zerochan.net/Hoshimi.Miyabi.1024.4278929.jpg",
+  "Shadow Monarch":"https://sololeveling-anime.net/assets/img/top/visual2.jpg",
+  "Yhwach":"https://api.duniagames.co.id/api/content/upload/file/19527842511727707846.jpg",
+  "Fire Fly":"https://i.postimg.cc/ZK9z1ydc/image.jpg",
+  "Excaliber Morgan":"https://i.pinimg.com/736x/22/58/2e/22582e4c51aefc07e3f5f0f52ef0bfc5.jpg",
+  "Medusa (Miniboss From Ryuudo Cave)":"https://i.pinimg.com/736x/d7/42/1b/d7421b6823c1147eb92150a8fe71bbf2.jpg",
+  "Yi Sang Full Power":"https://limbuscompany.wiki.gg/images/thumb/3/3d/Yi_Sang_Full.png/500px-Yi_Sang_Full.png",
+  "Yi Sang Half Power (Miniboss From Butterfly Grave)":"https://limbuscompany.wiki.gg/images/thumb/3/3d/Yi_Sang_Full.png/500px-Yi_Sang_Full.png",
+  "Vizard Ichigo":"https://www.pngkey.com/png/detail/966-9661406_render-ichigo-bankai-vizard-bleach-ichigo-vizard-bankai.png",
+  "Ulquiorra":"https://wallpapermotion.com/images/hd/ulquiorra-cifer-1919-x-985-wallpaper-axfyosh96423pbwe.jpg",
+  "Vizard Ichigo (From Inner Hueco Mundo) ":"https://www.kindpng.com/picc/m/147-1476692_vizard-ichigo-wallpaper-bleach-ichigo-bankai-hd-png.png",
+  "Ulquiorra (From Inner Hueco Mundo)":"https://wallpapermotion.com/images/hd/ulquiorra-cifer-1919-x-985-wallpaper-axfyosh96423pbwe.jpg",
+  "Yuji":"https://deltiasgaming.com/wp-content/uploads/2024/10/Yuji-Itadori-scaled.jpg",
+  "Frieren":"https://www.sakura.fm/cdn-cgi/image/width%3D512%2Cheight%3D512%2Cformat%3Dwebp%2Conerror%3Dredirect%2Cfit%3Dcover/https%3A/media.sakura.fm/image-VvJaO9c.png?r=1921442095"
+};
+
+// These searches are intentionally specific. This prevents the previous Sung Jin-Woo mistake
+// and asks for normal Sōsuke Aizen instead of a transformed version.
+const bossCharacterSearch = {
+  "Deku":"Izuku Midoriya",
+  "Gojo":"Satoru Gojo",
+  "Sukuna":"Ryomen Sukuna",
+  "Sung Jin Woo":"Sung Jin-Woo Solo Leveling",
+  "Rimuru":"Rimuru Tempest",
+  "Aizen":"Sousuke Aizen",
+  "Cid":"Cid Kagenou",
+  "Alpha (Miniboss From Cid Castle)":"Alpha The Eminence in Shadow",
+  "Gilgamesh":"Gilgamesh Fate",
+  "Gojo Shinjuku":"Satoru Gojo",
+  "Sukuna Shinjuku":"Ryomen Sukuna",
+  "Kokushibo":"Kokushibou",
+  "Yhwach":"Yhwach",
+  "Vizard Ichigo":"Ichigo Kurosaki",
+  "Ulquiorra":"Ulquiorra Cifer",
+  "Vizard Ichigo (From Inner Hueco Mundo) ":"Ichigo Kurosaki",
+  "Ulquiorra (From Inner Hueco Mundo)":"Ulquiorra Cifer",
+  "Yuji":"Yuji Itadori",
+  "Frieren":"Frieren"
+};
+
+const bossDirectOverrides = {
+  "Yhwach":"https://i.postimg.cc/j5jFPG6g/Ep398SKYhwach.webp",
+  "Vizard Ichigo":["https://i.postimg.cc/G2kxBKVT/images-(1).jpg"],
+  "Vizard Ichigo (From Inner Hueco Mundo) ":["https://i.postimg.cc/G2kxBKVT/images-(1).jpg"],
+  "Sukuna":"https://i.postimg.cc/XqRVCD4G/099afa69774f59f339828dbad05a6b68.jpg",
+  "Shadow Monarch":"https://i.postimg.cc/3NsKvbYk/jin-woo-in-front-of-solo-leveling-s-monarchs.avif",
+  "Sung Jin Woo":"https://i.postimg.cc/1Xk9qYsR/images.jpg",
+  "Excaliber":"https://i.postimg.cc/hvkSd3cm/8a1594abd340ed3154a155d59b6e3be0.jpg",
+  "Excaliber Morgan":"https://i.postimg.cc/sxkVh0sG/download.jpg",
+  "Deku":"https://i.postimg.cc/1R2R246d/http-image-noelshack-comfichiers201733-midoriya-all-might-face-11563214659vp7erovyhw.png",
+  "Rimuru":"https://i.postimg.cc/ZnGTdD45/HD-wallpaper-rimuru-anime-thumbnail.jpg",
+  "Cid":"https://i.postimg.cc/GtWcySdd/27606ed6361e098cd062c234f47e60b6.jpg",
+  "Alpha (Miniboss From Cid Castle)":"https://i.postimg.cc/cCpsn50W/9dc521fa2e418c669ca0d697254744806478b6e329473a229047383f4a6feb27.jpg",
+  "Gojo Shinjuku":"https://i.postimg.cc/1Xk9qYsX/Satoru-Gojo-29.webp",
+  "Sukuna Shinjuku":"https://i.postimg.cc/prw2F1R9/Eikichi-Onizuka.jpg",
+  "Yi Sang Full Power":"https://i.postimg.cc/0jMkrqRN/Yisang-Art1.webp",
+  "Yi Sang Half Power (Miniboss From Butterfly Grave)":"https://i.postimg.cc/0jMkrqRN/Yisang-Art1.webp",
+  "Miyabi":"https://i.postimg.cc/Y0GrjwK2/Miyabi-icon.jpg",
+  "Kokushibo":"https://i.postimg.cc/3NsKvbYT/754ac497e6f4091fcf213fa0b2ef806a.jpg"
+};
+
+const avatarCache = new Map();
+let avatarQueue = Promise.resolve();
+function normalizeName(v){return String(v||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
+async function fetchCharacterPortrait(bossName){
+  if(avatarCache.has(bossName)) return avatarCache.get(bossName);
+  if(bossDirectOverrides[bossName]){
+    avatarCache.set(bossName,bossDirectOverrides[bossName]);
+    return bossDirectOverrides[bossName];
+  }
+  const term=bossCharacterSearch[bossName];
+  if(!term) return bossAvatarUrls[bossName]||'';
+  const key='bossPortrait:'+bossName;
+  try{
+    const saved=localStorage.getItem(key);
+    if(saved){ avatarCache.set(bossName,saved); return saved; }
+  }catch(e){}
+  try{
+    const res=await fetch('https://api.jikan.moe/v4/characters?q='+encodeURIComponent(term)+'&limit=8');
+    if(!res.ok) throw new Error('search failed');
+    const json=await res.json();
+    const wanted=normalizeName(term.split(' Solo')[0].split(' The ')[0]);
+    const hit=(json.data||[]).find(x=>normalizeName(x.name).includes(wanted)||wanted.includes(normalizeName(x.name))) || (json.data||[])[0];
+    const url=hit?.images?.jpg?.image_url || hit?.images?.webp?.image_url || bossAvatarUrls[bossName]||'';
+    if(url){
+      avatarCache.set(bossName,url);
+      try{localStorage.setItem(key,url)}catch(e){}
+      return url;
+    }
+  }catch(e){}
+  return bossAvatarUrls[bossName]||'';
+}
+
+function loadBossAvatar(img,bossName){
+  if(!img) return;
+  const show=(url)=>{
+    if(!url) return;
+    img.onload=()=>img.classList.add('loaded');
+    img.onerror=()=>{
+      img.classList.remove('loaded');
+      // If the portrait host blocks the image, leave the card itself untouched.
+      img.removeAttribute('src');
+    };
+    img.referrerPolicy='no-referrer';
+    img.decoding='async';
+    img.loading='lazy';
+    img.src=url;
+  };
+  // Queue requests so Jikan is not rate-limited and the rest of the page never breaks.
+  avatarQueue=avatarQueue.then(async()=>{
+    const url=await fetchCharacterPortrait(bossName);
+    if(Array.isArray(url)){
+      let idx=0;
+      const showNext=()=>{
+        const current=url[idx++ % url.length];
+        show(current);
+      };
+      showNext();
+      if(url.length>1){
+        img.dataset.avatarTimer='1';
+        setInterval(showNext,4000);
+      }
+    }else{
+      show(url);
+    }
+    await new Promise(r=>setTimeout(r,650));
+  }).catch(()=>show(bossAvatarUrls[bossName]||''));
+}
+function bossCardHTML(b){
+  const safeName=escapeHTML(b.name);
+  // Wandenreich is a group of mini-bosses, so intentionally no character picture.
+  const noImage = b.name === "All Mini Bosses From Wandenreich" || b.name === "Protosam Type III (Miniboss From Glamoth Planet)" || b.name === "Shadow Monarch Clone";
+  const avatar = noImage ? `` : `<div class="boss-avatar-wrap"><div class="boss-avatar-fallback"></div><img class="boss-avatar" alt="${safeName}"></div>`;
+  return `<div class="boss-main ${noImage ? 'boss-main-no-image' : ''}">${avatar}<div class="boss-name-wrap"><div class="boss-name">${safeName}</div></div></div><div class="click-me">CLICK ON ME →</div>`;
+}
+
 function render(data,filter,listId,countId,emptyId,grouped=false){
  const query=filter.trim().toLowerCase(); let results=data.filter(b=>{if(grouped) return (b.floor||"Unassigned").toLowerCase().includes(query); return b.name.toLowerCase().includes(query);});
  if(!grouped && data===bosses && selectedCategory!=="All") results=results.filter(b=>b.category===selectedCategory);
  const list=document.getElementById(listId); list.innerHTML="";
  if(grouped){const floors=[];results.forEach(b=>{const f=b.floor||"Unassigned";if(!floors.includes(f))floors.push(f)});floors.forEach(f=>{const t=document.createElement("h2");t.style.cssText="margin:22px 0 10px;font-size:22px;color:#c4a7ff;";t.textContent=f;list.appendChild(t);results.filter(b=>(b.floor||"Unassigned")===f).forEach(b=>{const c=document.createElement("div");c.className="boss";c.innerHTML=`<div class="boss-name">${escapeHTML(b.name)}</div><div class="hp">${escapeHTML(b.hp)} HP</div>`;list.appendChild(c)})})}
- else {results.forEach(b=>{const c=document.createElement("div");c.className="boss";c.innerHTML=`<div class="boss-name">${escapeHTML(b.name)}</div><div class="click-me">CLICK ON ME →</div>`;c.onclick=()=>openBossModal(b);list.appendChild(c)})}
+ else {results.forEach(b=>{const c=document.createElement("div");c.className="boss";c.innerHTML=bossCardHTML(b);const img=c.querySelector(".boss-avatar");loadBossAvatar(img,b.name);c.onclick=()=>openBossModal(b);list.appendChild(c)})}
  document.getElementById(countId).textContent=`${results.length} boss${results.length===1?"":"es"}`;document.getElementById(emptyId).style.display=results.length?"none":"block";
 }
 
